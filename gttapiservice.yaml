@@ -1,0 +1,672 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Service
+  contact: {}
+host: pc10117046.internal.ptc-prod.net
+basePath: /GTT.API/Service.svc/rest
+securityDefinitions: {}
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /ItemTT/{itemID}:
+    get:
+      summary: Retrieves public track&trace information of an item ID
+      tags:
+        - ServiceEndpointNoSec
+      operationId: ItemTT
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: itemID
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItem'
+          headers: {}
+  /ItemTTExt/{itemID}/{token}:
+    get:
+      summary: Retrieves private track&trace information of an item ID. Security token is required.
+      tags:
+        - ServiceEndpointNoSec
+      operationId: ItemTTExt
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: itemID
+          type: string
+          in: path
+          required: true
+        - name: token
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItem'
+          headers: {}
+  /ItemTTWithTrans/{itemID}/{langCd}:
+    get:
+      summary: Retrieves public track&trace information of an item ID, including event description in the given language
+      tags:
+        - ServiceEndpointNoSec
+      operationId: ItemTTWithTrans
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+       - name: itemID
+         type: string
+         in: path
+         required: true
+       - name: langCd
+         type: string
+         in: path
+         required: true
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItem'
+          headers: {}
+  /ItemTTWithTransExt/{itemID}/{langCd}/{token}:
+    get:
+      summary: Retrieves private track&trace information of an item ID, including event description in the given language. Security token is required. 
+      tags:
+        - ServiceEndpointNoSec
+      operationId: ItemTTWithTransExt
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+       - name: itemID
+         type: string
+         in: path
+         required: true
+       - name: langCd
+         type: string
+         in: path
+         required: true
+       - name: token
+         type: string
+         in: path
+         required: true
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItem'
+          headers: {}
+  /ListTT:
+    post:
+      summary: Retrieves public track&trace information of an array of item IDs.
+      tags:
+        - ServiceEndpointNoSec
+      operationId: ListTT
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/q5_ArrayOfstring'
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItem'
+          headers: {}
+  /ListTTExt:
+    post:
+      summary: Retrieves private track&trace information of an array of item IDs. Security token is required.
+      tags:
+        - ServiceEndpointNoSec
+      operationId: ListTTExt
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/q11_ListTTParam'
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItem'
+          headers: {}
+  /CheckItemOrReceptacle:
+    post:
+      summary: Retrieves EAD item information of an item or receptacle ID. Security token is required. 
+      tags:
+        - ServiceEndpointNoSec
+      operationId: CheckItemOrReceptacle
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/q11_CheckItemOrReceptacleParam'
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItemCheckStatus'
+          headers: {}
+  /CheckMultipleItems:
+    post:
+      summary: Retrieves EAD item information of an array of item IDs. Security token is required. 
+      tags:
+        - ServiceEndpointNoSec
+      operationId: CheckMultipleItems
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/q11_CheckMultipleItemsParam'
+      responses:
+        '200':
+          description: Successfully retrieved the response
+          schema:
+            $ref: '#/definitions/q12_ArrayOfAPIItemCheckStatus'
+          headers: {}
+definitions:  
+  q12_ArrayOfAPIItem:
+    title: q12_ArrayOfAPIItem
+    description: ''
+    xml:
+      name: ArrayOfAPIItem
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: array
+    items:
+          $ref: '#/definitions/q12_APIItem'
+  q12_APIItem:
+    title: q12_APIItem
+    description: ''
+    xml:
+      name: APIItem
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      DestinationCountryCd:
+        xml:
+          name: DestinationCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      DestinationCountryNm:
+        xml:
+          name: DestinationCountryNm
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      Events:
+        $ref: '#/definitions/q12_ArrayOfAPIItemEvent'
+      ID:
+        xml:
+          name: ID
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      MailClassCd:
+        xml:
+          name: MailClassCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      OriginCountryCd:
+        xml:
+          name: OriginCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      OriginCountryNm:
+        xml:
+          name: OriginCountryNm
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      State:
+        $ref: '#/definitions/q12_APIItemState'
+  q12_ArrayOfAPIItemEvent:
+    title: q12_ArrayOfAPIItemEvent
+    description: ''
+    xml:
+      name: ArrayOfAPIItemEvent
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      APIItemEvent:
+        xml:
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: array
+        items:
+          $ref: '#/definitions/q12_APIItemEvent'
+  q12_APIItemEvent:
+    title: q12_APIItemEvent
+    description: ''
+    xml:
+      name: APIItemEvent
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      EventCd:
+        xml:
+          name: EventCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false          
+        type: string
+      EventDT:
+        xml:
+          name: EventDT
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+        format: date-time
+      EventLocation:
+        xml:
+          name: EventLocation
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      EventNm:
+        xml:
+          name: EventNm
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      NonDeliveryMeasureCd:
+        xml:
+          name: NonDeliveryMeasureCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      NonDeliveryMeasureNm:
+        xml:
+          name: NonDeliveryMeasureNm
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      NonDeliveryReasonCd:
+        xml:
+          name: NonDeliveryReasonCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      NonDeliveryReasonNm:
+        xml:
+          name: NonDeliveryReasonNm
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      Signature:
+        xml:
+          name: Signature
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+  q12_APIItemState:
+    title: q12_APIItemState
+    description: ''
+    example: Posted
+    xml:
+      name: APIItemState
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: string
+    enum:
+      - Posted
+      - OnRoute
+      - Canceled
+      - Delivered
+  q12_ArrayOfAPIItemCheckStatus:
+    title: q12_ArrayOfAPIItemCheckStatus
+    description: ''
+    xml:
+      name: ArrayOfAPIItemCheckStatus
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: array
+    items:
+      $ref: '#/definitions/q12_APIItemCheckStatus'
+        
+  q12_APIItemCheckStatus:
+    title: q12_APIItemCheckStatus
+    description: ''
+    xml:
+      name: APIItemCheckStatus
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      DestinationCountryCd:
+        xml:
+          name: DestinationCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      EarliestEventDT:
+        xml:
+          name: EarliestEventDT
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+        format: date-time
+      HasITMATT:
+        xml:
+          name: HasITMATT
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: boolean
+      ID:
+        xml:
+          name: ID
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      OriginCountryCd:
+        xml:
+          name: OriginCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      Referrals:
+        $ref: '#/definitions/q12_ArrayOfReferralInfo'
+  q12_ArrayOfReferralInfo:
+    title: q12_ArrayOfReferralInfo
+    description: ''
+    xml:
+      name: ArrayOfReferralInfo
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      ReferralInfo:
+        xml:
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: array
+        items:
+          $ref: '#/definitions/q12_ReferralInfo'
+  q12_ReferralInfo:
+    title: q12_ReferralInfo
+    description: ''
+    xml:
+      name: ReferralInfo
+      namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+      prefix: q12
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      Code:
+        xml:
+          name: Code
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+      EventDT:
+        xml:
+          name: EventDT
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: string
+        format: date-time
+      ResponsePending:
+        xml:
+          name: ResponsePending
+          namespace: http://schemas.datacontract.org/2004/07/GTT.BusinessLayer.API
+          prefix: q12
+          attribute: false
+          wrapped: false
+        type: boolean
+  q5_ArrayOfstring:
+    title: q5_ArrayOfstring
+    description: ''
+    type: array
+    items:
+      type: string
+        
+  q11_ListTTParam:
+    title: q11_ListTTParam
+    description: ''
+    xml:
+      name: ListTTParam
+      namespace: http://schemas.datacontract.org/2004/07/GTT.API
+      prefix: q11
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      ItemIDs:
+        $ref: '#/definitions/q5_ArrayOfstring'
+      Token:
+        xml:
+          name: Token
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+  q11_CheckItemOrReceptacleParam:
+    title: q11_CheckItemOrReceptacleParam
+    description: ''
+    xml:
+      name: CheckItemOrReceptacleParam
+      namespace: http://schemas.datacontract.org/2004/07/GTT.API
+      prefix: q11
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      DestinationCountryCd:
+        xml:
+          name: DestinationCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+      ItemOrReceptacleID:
+        xml:
+          name: ItemOrReceptacleID
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+      OriginCountryCd:
+        xml:
+          name: OriginCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+      Token:
+        xml:
+          name: Token
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+  q11_CheckMultipleItemsParam:
+    title: q11_CheckMultipleItemsParam
+    description: ''
+    xml:
+      name: CheckMultipleItemsParam
+      namespace: http://schemas.datacontract.org/2004/07/GTT.API
+      prefix: q11
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      Items:
+        $ref: '#/definitions/q11_ArrayOfCheckItemParam'
+      Token:
+        xml:
+          name: Token
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+  q11_ArrayOfCheckItemParam:
+    title: q11_ArrayOfCheckItemParam
+    description: ''
+    xml:
+      name: ArrayOfCheckItemParam
+      namespace: http://schemas.datacontract.org/2004/07/GTT.API
+      prefix: q11
+      attribute: false
+      wrapped: false
+    type: array
+    items:
+      $ref: '#/definitions/q11_CheckItemParam'
+        
+  q11_CheckItemParam:
+    title: q11_CheckItemParam
+    description: ''
+    xml:
+      name: CheckItemParam
+      namespace: http://schemas.datacontract.org/2004/07/GTT.API
+      prefix: q11
+      attribute: false
+      wrapped: false
+    type: object
+    properties:
+      DestinationCountryCd:
+        xml:
+          name: DestinationCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+      ItemID:
+        xml:
+          name: ItemID
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+      OriginCountryCd:
+        xml:
+          name: OriginCountryCd
+          namespace: http://schemas.datacontract.org/2004/07/GTT.API
+          prefix: q11
+          attribute: false
+          wrapped: false
+        type: string
+  
+tags: []
